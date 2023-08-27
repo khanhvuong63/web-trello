@@ -11,7 +11,6 @@ import { Box } from '@mui/material'
 
 function ModeSelect() {
   const { mode, setMode } = useColorScheme()
-  
   const handleChange = (event) => {
     const selectedMode = event.target.value
     setMode(selectedMode) 
@@ -47,6 +46,6 @@ function ModeSelect() {
         </MenuItem>
       </Select>
     </FormControl>
-   )
+  )
 }
 export default ModeSelect
