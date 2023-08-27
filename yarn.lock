@@ -2486,7 +2486,7 @@ uri-js@^4.2.2:
   dependencies:
     punycode "^2.1.0"
 
-vite-plugin-svgr@^3.2.0:
+vite-plugin-svgr@3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/vite-plugin-svgr/-/vite-plugin-svgr-3.2.0.tgz#920375aaf6635091c9ac8e467825f92d32544476"
   integrity sha512-Uvq6niTvhqJU6ga78qLKBFJSDvxWhOnyfQSoKpDPMAGxJPo5S3+9hyjExE5YDj6Lpa4uaLkGc1cBgxXov+LjSw==
