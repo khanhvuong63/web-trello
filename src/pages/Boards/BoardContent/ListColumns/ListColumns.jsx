@@ -1,10 +1,10 @@
 import Box from '@mui/material/Box'
 import Column from './Column/Column'
-import { Button, colors } from '@mui/material'
+import { Button } from '@mui/material'
 import NoteAddIcon from '@mui/icons-material/NoteAdd'
 
 
-function ListColumns() {
+function ListColumns({ columns }) {
   return (
     <Box sx={{
       bgcolor:'inherit', // kế thừa từ box cha ở trên
@@ -15,8 +15,7 @@ function ListColumns() {
       overflowY:'hidden',
       '&::-webkit-scrollbar-track':{ m:2 }
     }}>
-      <Column />
-      <Column />
+      {columns?.map(column => <Column key={column._id} column={column}/>)}
       {/* Box add new column CTA */}
       <Box sx={{
         minWidth:'200px',

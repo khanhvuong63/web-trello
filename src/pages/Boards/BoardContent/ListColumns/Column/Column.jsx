@@ -17,9 +17,10 @@ import Tooltip from '@mui/material/Tooltip'
 import AddCardIcon from '@mui/icons-material/AddCard'
 import DragHandleIcon from '@mui/icons-material/DragHandle'
 import ListCards from './ListCards/ListCards'
+import { mapOrder } from '~/utils/sort'
 
 
-function Column() {
+function Column({ column }) {
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
   const handleClick = (event) => {
@@ -28,6 +29,7 @@ function Column() {
   const handleClose = () => {
     setAnchorEl(null)
   }
+  const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, '_id')
   return (
     <Box sx={{
       minWidth:'300px',
@@ -40,7 +42,7 @@ function Column() {
     }}>
       {/* Box column header */}
       <Box sx={{
-        height:(theme) => theme.trello.ColumnHeaderHeight,
+        height:(theme) => theme.trello.columnHeaderHeight,
         p:2,
         display:'flex',
         alignItems:'center',
@@ -51,7 +53,7 @@ function Column() {
           fontWeight:'bold',
           fontSize:'1rem'
         }}>
-          Column Title
+          { column?.title }
         </Typography>
         <Box>
           <Tooltip title="More options">
@@ -96,28 +98,28 @@ function Column() {
                 <ContentPasteIcon fontSize="small" />
               </ListItemIcon>
               <ListItemText>Paste</ListItemText>
-              </MenuItem>
-              <Divider />
-              <MenuItem>
+            </MenuItem>
+            <Divider />
+            <MenuItem>
               <ListItemIcon>
-                  <DeleteIcon fontSize="small" />
+                <DeleteIcon fontSize="small" />
               </ListItemIcon>
               <ListItemText>Remove this column</ListItemText>
-              </MenuItem>
-              <MenuItem>
+            </MenuItem>
+            <MenuItem>
               <ListItemIcon>
-                  <Cloud fontSize="small" />
+                <Cloud fontSize="small" />
               </ListItemIcon>
               <ListItemText>Archive this column</ListItemText>
-              </MenuItem>
+            </MenuItem>
           </Menu>
         </Box>
       </Box>
       {/* Box list card  */}
-      <ListCards />
+      <ListCards cards={orderedCards} />
       {/* Box column Footer */}
       <Box sx={{
-        height:(theme) => theme.trello.ColumnFooterHeight,
+        height:(theme) => theme.trello.columnFooterHeight,
         p: 2,
         display: 'flex',
         alignItems:'center',
