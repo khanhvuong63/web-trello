@@ -1,8 +1,8 @@
 import Box from '@mui/material/Box'
 import ListColumns from './ListColumns/ListColumns'
 import { mapOrder } from '~/utils/sort'
-import { DndContext, DragOverlay, MouseSensor, TouchSensor, closestCorners, defaultDropAnimationSideEffects, useSensor, useSensors } from '@dnd-kit/core'
-import { useEffect, useState } from 'react'
+import { DndContext, DragOverlay, MouseSensor, TouchSensor, closestCorners, defaultDropAnimationSideEffects, getFirstCollision, pointerWithin, useSensor, useSensors } from '@dnd-kit/core'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { arrayMove } from '@dnd-kit/sortable'
 
 import Column from './ListColumns/Column/Column'
@@ -25,7 +25,7 @@ function BoardContent({ board }) {
   // nhấn giữ 250ms và dung sai của cảm ứng 500px là kích hoạt event
   const touchSensor = useSensor(TouchSensor, { activationConstraint: { delay: 250, tolerance: 500 } })
 
-  // Ưu tiên sử dụng kết hợp 2 loại sensors là mouse và touch để có trải nghiệm tốt trên mobile ko bị bug 
+  // Ưu tiên sử dụng kết hợp 2 loại sensors là mouse và touch để có trải nghiệm tốt trên mobile ko bị bug
   const mySensors = useSensors(mouseSensor, touchSensor)
 
   const [orderedColumnsState, setOrderedColumnsState] = useState([])
@@ -37,6 +37,9 @@ function BoardContent({ board }) {
   const [activeDragItemData, setActiveDragItemData] = useState(null)
 
   const [oldColumnWhenDraggingCard, setOldColumnWhenDraggingCard] = useState(null)
+
+  // diem va cham cuoi cung ( xu li thuat toan phat hien va cham )
+  const lastOverId = useRef(null)
 
   useEffect(() => {
     setOrderedColumnsState(mapOrder(board?.columns, board?.columnOrderIds, '_id'))
@@ -247,11 +250,51 @@ function BoardContent({ board }) {
       styles: { active:  { opacity:'0.5' } }
     })
   }
+  // args = arguments = các đối số, tham số
+  const collisionDetectionStrategy = useCallback((args) => {
+    // truong hop keo column thi dung thuat toan closestCorners la chuan nhat
+    if (activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.COLUMN) {
+      return closestCorners({ ...args })
+    }
+
+    // tìm các điểm giao nhau, va chạm - intersections với con trỏ
+    const pointerIntersections = pointerWithin(args)
+
+    if (!pointerIntersections?.length) return
+    // thuat toan phat hien va cham se tra ve mot mang cac va cham o day
+    //const intersections = !!pointerIntersections?.length ? pointerIntersections : rectIntersection(args)
+
+    // tim overId dau tien trong intersections o tren
+    let overId = getFirstCollision(pointerIntersections, 'id')
+
+    if (overId) {
+      const checkColumn = orderedColumnsState.find(column => column._id === overId)
+      if (checkColumn) {
+        //console.log('overId before: ', overId)
+        overId = closestCorners({
+          ...args,
+          droppableContainers: args.droppableContainers.filter(container => {
+            return ( container.id !== overId) && (checkColumn?.cardOrderIds?.includes(container.id) )
+          })
+        }) [0]?.id
+        //console.log('overId after: ', overId)
+      }
+
+      lastOverId.current = overId
+      return [{ id: overId }]
+    }
+
+    // neu overId la null thi tra ve mang rong - trach bug cash trang
+    return lastOverId.current ? [{ id: lastOverId.current }] : []
+  }, [activeDragItemType, orderedColumnsState] )
+
   return (
     <DndContext
       sensors={mySensors}
       // thuật toán phát hiện va chạm (nếu ko có nó thì card với với cover lớn sẽ ko kéo qua Column dc vì lúc này nó đang bị conflict giữa card và column), chúng ta sẽ dùng closestCorners thay vì closestCenter
-      collisionDetection={closestCorners}
+
+      // tự custom nâng cao thuật toán phát hiện va chạm
+      collisionDetection={collisionDetectionStrategy}
       onDragStart={handleDragStart}
       onDragOver={handleDragOver}
       onDragEnd={handleDragEnd}
