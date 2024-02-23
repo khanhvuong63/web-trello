@@ -98,22 +98,22 @@ function BoardBar({ board }) {
           max={4}
         >
           <Tooltip title='Khanhdev'>
-            <Avatar alt="Khanhdev" src="/static/images/avatar/1.jpg" />
+            <Avatar alt="Khanhdev" src='https://lh3.googleusercontent.com/a/ACg8ocLgOiaLDKSCa_C9JXOewfKdrOTdQGJdLKm8s5-VoPAfbA=s389-c-no' />
           </Tooltip>
           <Tooltip title='Khanhdev'>
-            <Avatar alt="Khanhdev" src="/static/images/avatar/1.jpg" />
+            <Avatar alt="Khanhdev" src='https://yt3.ggpht.com/yti/AGOGRCq9__kkv3OAaPHq-xIgqqdGG_rzf3RkvcCOGTkfoA=s108-c-k-c0x00ffffff-no-rj' />
           </Tooltip>
           <Tooltip title='Khanhdev'>
-            <Avatar alt="Khanhdev" src="/static/images/avatar/1.jpg" />
+            <Avatar alt="Khanhdev" src='https://scontent.fvca1-1.fna.fbcdn.net/v/t39.30808-6/356204706_2556975427793295_4078149828310438755_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=MOL5yO-yD4wAX_56pX0&_nc_ht=scontent.fvca1-1.fna&oh=00_AfBVjauQuL0em4jQx3K0i_s1jwD-qd1LmZwiCAp7WViBWA&oe=65DDA989' />
           </Tooltip>
           <Tooltip title='Khanhdev'>
-            <Avatar alt="Khanhdev" src="/static/images/avatar/1.jpg" />
+            <Avatar alt="Khanhdev" src='/static/images/avatar/1.jpg' />
           </Tooltip>
           <Tooltip title='Khanhdev'>
-            <Avatar alt="Khanhdev" src="/static/images/avatar/1.jpg" />
+            <Avatar alt="Khanhdev" src='/static/images/avatar/1.jpg' />
           </Tooltip>
           <Tooltip title='Khanhdev'>
-            <Avatar alt="Khanhdev" src="/static/images/avatar/1.jpg" />
+            <Avatar alt="Khanhdev" src='/static/images/avatar/1.jpg' />
           </Tooltip>
         </AvatarGroup>
       </Box>
