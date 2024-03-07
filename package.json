@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build --base=./",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "yarn build && gh-pages -d dist"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.0.8",
@@ -17,9 +18,11 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.14.5",
+    "axios": "^1.6.7",
     "lodash": "^4.17.21",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "yarn": "^1.22.21"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
