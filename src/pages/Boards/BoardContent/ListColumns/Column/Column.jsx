@@ -189,14 +189,15 @@ function Column({ column }) {
               <TextField
                 label="Enter card title..."
                 type="text"
-                size='small'
+                size="small"
                 variant ="outlined"
                 autoFocus
+                data-no-dnd="true"
                 value={newCardTitle}
                 onChange={(e) => setNewCardTitle(e.target.value)}
                 sx=
                   {{
-                    '& label': {color: 'text.primary'},
+                    '& label': { color: 'text.primary' },
                     '& input': {
                       color:(theme) => theme.palette.primary.main,
                       bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#333643' : 'white')
